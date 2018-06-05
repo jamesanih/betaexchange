@@ -150,7 +150,7 @@ class UserController extends Controller
                 $image->move($path, $newfilename);
                  $this->notice($title, $sender_name, $subject, $desc);
                 $this->bitcoin_alert_status();
-                //$this->send_bitcoin_alert($request['date'], $request['details_no'], $request['amount_paid'],$request['depositor_name'], $newfilename);
+                $this->send_bitcoin_alert($request['date'], $request['details_no'], $request['amount_paid'],$request['depositor_name'], $newfilename);
             
              }
                 
@@ -260,7 +260,8 @@ class UserController extends Controller
         // $status->payment_alert = "Alert sent";
         $status = DB::table("bitcoins")->where('user_id', $id)
                         ->update([
-                            'payment_alert'=> "Alert sent"
+                            'payment_alert'=> "Alert sent",
+                            'status'=> "1"
                         ]);
        
         
@@ -274,7 +275,8 @@ class UserController extends Controller
         // $status->payment_alert = "Alert sent";
         $status = DB::table("perfect_money")->where('user_id', $id)
                         ->update([
-                            'payment_alert'=> "Alert sent"
+                            'payment_alert'=> "Alert sent",
+                            'status' => "1"
                         ]); 
     }
 

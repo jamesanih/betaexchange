@@ -275,14 +275,15 @@ class HomeController extends Controller
             $pin=mt_rand(1000,99999);
             $user_no=str_shuffle($pin);
             return $user_no;
-            //$this->checkid($user_no);
+           
          }
 
 
    private function checkid($gen_id) {
       $exists = User::where('id', $gen_id)->exists();
       if($exists) {
-        $this->user_id();
+        $id = $this->user_id();
+        return $id;
       } else {
         return $gen_id;
       }

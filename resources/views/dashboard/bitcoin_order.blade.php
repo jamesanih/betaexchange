@@ -65,7 +65,7 @@
                                         <th>Total</th>
                                         <th>Method</th>
                                         <th>Status</th>
-                                        <th width="5%" id="head_display"></th>
+                                        <th width="5%" id="head_display">confirm payment</th>
                                          <th width="5%" id="deletebtn">Delete</th>
                                     </tr>
                                 </thead>
@@ -117,7 +117,7 @@
                            <a id="details"  role='button' data-edit-id='{!! $bitcoin->id!!}' class='btn btn-default editBtn' ><i class='fa fa-edit'></i>Details</a>
                            @endif
                          </td>
-                         <td>
+                         <td id="del">
                            <a href='#delete_modal' data-delete-id='{!! $bitcoin->id!!}' class='btn btn-danger deleteBtn' role='button' data-toggle='modal'><i class='fa fa-trash-o fa-lg'></i></a>
                          </td>
                     </tr>
@@ -194,7 +194,7 @@
                           @if($bitcoins->sales_alert == "not sent")
                           <a href="#confirm_bit_sell" id="confirm_payment"  role='button' data-edit-id='{!! $bitcoins->id!!}' class='btn btn-default editBtn' data-toggle="modal"><i class='fa fa-edit'></i>confirm sales</a>
                           @else 
-                           <a id="details"  role='button' data-edit-id='{!! $bitcoins->id!!}' class='btn btn-default detailsBtn' ><i class='fa fa-edit'></i>Details</a>
+                           <a id="details2"  role='button' data-edit-id='{!! $bitcoins->id!!}' class='btn btn-default detailsBtn' ><i class='fa fa-edit'></i>Details</a>
                           @endif
                         </td>
 
@@ -225,7 +225,15 @@
             <!-- /.row -->
         </div>
 
-        <div class="modal fade" id="view_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <!-- buy bitcoins details modal -->
+ <div class="modal fade" id="view_modal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog"  id="view_modal_body2">
+     
+    </div>
+</div>
+
+<!-- sell bitcoins details modal -->
+<div class="modal fade" id="view_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog"  id="view_modal_body">
      
     </div>
@@ -245,6 +253,7 @@
           if($('#details').length) {
             $('#head_display').html("Details");
             $('#deletebtn').hide();
+            $('#del').hide();
           }
 
 
@@ -252,7 +261,7 @@
             $('#head_display').html("Confirm Payment");
           }
 
-          if($('#details').length) {
+          if($('#details2').length) {
             $('#delete').hide();
             $('#delrow').hide();
           }
@@ -297,10 +306,26 @@
                                     backdrop: 'static',
                                     keyboard: true
                                 }, "show");
-                                bindForm(this);
+                               // bindForm(this);
                 });
             return false;
          });
+
+
+                //load buy bitcoin details page
+                $(".editBtn").click(function () {
+
+            $("#view_modal_body2").load("viewbitcoin/" + $(this).data("edit-id"),function(responseTxt, statusTxt, xh)
+                {
+                     $("#view_modal2").modal({
+                                    backdrop: 'static',
+                                    keyboard: true
+                                }, "show");
+                                //bindForm(this);
+                });
+            return false;
+         });
+
 
 
 

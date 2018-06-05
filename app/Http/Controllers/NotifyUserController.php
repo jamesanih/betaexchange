@@ -9,6 +9,9 @@ use App\Models\PurchaseBitCoin;
 use App\Models\PurchasePerfectMoney;
 use App\Confirm_sell_bitcoin;
 use App\Confirm_sell_pm;
+use App\Confirm_buy_bitcoins;
+use App\Confirm_buy_pm;
+
 
 class NotifyUserController extends Controller
 {
@@ -33,9 +36,12 @@ class NotifyUserController extends Controller
 
 
     public function viewBitcoin($id) {
-        $data = BitCoin::find($id);
-        //dd($data); 
-        $data['details'] = BitCoin::find($id);
+        //$data = BitCoin::find($id);
+        //dd($id);
+        $data['page_title'] = "BitCoin" ;
+        $data['buy_details'] = BitCoin::find($id);
+        $data['conf_details'] = Confirm_buy_bitcoins::where('bitcoins_id', $id)->get();
+        //dd($data);
         return view('modals.bt_confirm_model', $data);
     }
 
