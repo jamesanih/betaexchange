@@ -1,3 +1,4 @@
+@foreach($sell_bit as $data)
 <div id="confirm_bit_sell" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
 
@@ -32,6 +33,7 @@
                 <input type="text" class="form-control" name="wallet_id" id="wallet_id" placeholder="Enter your Wallet ID">
               </div>
 
+              <input type="hidden" name="purchase_id" value="{{$data->id}}">
             
           
           
@@ -48,7 +50,7 @@
     </div>
 </div>
 
-@foreach($sell_bit as $data)
+
 <div id="delete_bit_modal" class="modal fade" tabindex="-1" role="dialog" aria-labellby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">

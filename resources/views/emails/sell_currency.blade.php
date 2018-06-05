@@ -4,7 +4,7 @@
 	<title>Sell Perfect</title>
 </head>
 <body>
-<h4>This User <b>{!! $user->account_name!!}</b> with the phone number <b>{!! $user->phone_no !!}</b> will love to sell {{ $units }} units of {{ $ctype }}, to us. Please try to respond as soon as possible.</h4>
+<h4>This User <b>{!! $user->account_name!!}</b> with the phone number <b>{!! $user->phone_no !!}</b> will love to sell {!! $user->unit !!} units of {{ $ctype }}, to us. Please try to respond as soon as possible.</h4>
 <br>
 
 <h3>Details are as follows</h3>

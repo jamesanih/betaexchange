@@ -129,7 +129,7 @@ class UserController extends Controller
             $image = $request->file('receipt_dir');
             $filename = $image->getClientOriginalName();
              $fileExtension = $image->getClientOriginalExtension();
-             $newfilename = Auth::user()->user_id . "_" . $filename;
+             $newfilename = Auth::user()->user_id . "_" . $fileExtension;
 
 
              $save = Confirm_buy_bitcoins::create([
@@ -138,13 +138,14 @@ class UserController extends Controller
                 'details_no'=> $request['details_no'],
                 'amount_paid'=>$request['amount_paid'],
                 'depositor_name'=>$request['depositor_name'],
-                'receipt_dir'=> $newfilename
+                'receipt_dir'=> $newfilename,
+                'bitcoins_id'=>$request['purchase_id']
              ]);
 
              if($save) {
                 $sender_name = "BetaexchangeNg";
                 $subject = "Confirm Bitcoin Payment!!";
-                $desc ="Thanks for confirming your order, Your is been processed...";
+                $desc ="Thanks for confirming your order, Your order is been processed...";
                 $title = "BitCoin Payment Alert";
 
                 $image->move($path, $newfilename);
@@ -178,7 +179,7 @@ class UserController extends Controller
             $image = $request->file('receipt_dir');
             $filename = $image->getClientOriginalName();
              $fileExtension = $image->getClientOriginalExtension();
-             $newfilename = Auth::user()->user_id . "_" . $filename;
+             $newfilename = Auth::user()->user_id . "_" . $fileExtension;
 
 
              $save = Confirm_buy_pm::create([
@@ -187,13 +188,14 @@ class UserController extends Controller
                 'details_no'=> $request['details_no'],
                 'amount_paid'=>$request['amount_paid'],
                 'depositor_name'=>$request['depositor_name'],
-                'receipt_dir'=> $newfilename
+                'receipt_dir'=> $newfilename,
+                'perfect_money_id' => $request['purchase_id']
              ]);
 
              if($save) {
                  $sender_name = "betaexchangeng";
                 $subject = "Confirm Perfect Money Payment!!";
-                $desc ="Thanks for confirming your order, Your is been processed...";
+                $desc ="Thanks for confirming your order, Your order is been processed...";
                 $title = "Perfect Money Payment Alert";
 
                 $image->move($path, $newfilename);
@@ -295,7 +297,8 @@ class UserController extends Controller
                 'date_sent'=> $request['date_sent'],
                 'hash'=> $request['hash'],
                 'amount_sent'=> $request['amount_sent'],
-                'wallet_id' => $request['wallet_id']
+                'wallet_id' => $request['wallet_id'],
+                'purchase_bitcoins_id' => $request['purchase_id']
          ]);
 
          if($sell) {
@@ -326,7 +329,8 @@ class UserController extends Controller
                 'date_sent'=> $request['date_sent'],
                 'batch_number'=> $request['batch_number'],
                 'amount_sent'=> $request['amount_sent'],
-                'wallet_id' => $request['wallet_id']
+                'wallet_id' => $request['wallet_id'],
+                'purchase_perfect_id' => $request['purchase_id']
          ]);
 
          if($sell) {
@@ -374,7 +378,7 @@ class UserController extends Controller
         $data['amount_sent'] = $amount_sent;
         $data['wallet_id']=$wallet_id;
 
-
+        //admin
         Mail::send('emails.alert',$data, function($message)
              {
                  $message->to("anihuchenna16@gmail.com")

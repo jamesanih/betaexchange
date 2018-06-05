@@ -1,3 +1,4 @@
+@foreach($modal_user as $data)
 <div id="confirm" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
 
@@ -32,6 +33,8 @@
                 <input type="text" class="form-control" name="depositor_name" id="depositor_name" placeholder="eg:john eze">
               </div>
 
+               <input type="hidden" name="purchase_id" value="{{$data->id}}">
+
             
           
           <div class="form-group">
@@ -51,7 +54,7 @@
     </div>
 </div>
 
-@foreach($modal_user as $data)
+
 <div id="delete_modal" class="modal fade" tabindex="-1" role="dialog" aria-labellby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">

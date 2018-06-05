@@ -77,6 +77,7 @@
                         <tr>
                        
                          <td>
+
                          {!! $bitcoin->created_at->todatestring() !!}
                         </td>
                         <td>
@@ -112,7 +113,7 @@
                          </td>
                          <td>
                            @if($bitcoin->payment_alert == "not sent")
-                            <a href="#confirm" id="confirm_payment"  role='button' data-edit-id='{!! $bitcoin->id!!}' class='btn btn-default editBtn' data-toggle="modal"><i class='fa fa-edit'></i>confirm payment</a>
+                            <a href="#confirm" id="confirm_payment"  role='button' data-edit-id='{!! $bitcoin->id!!}' class='btn btn-default' data-toggle="modal"><i class='fa fa-edit'></i>confirm payment</a>
                            @else
                            <a id="details"  role='button' data-edit-id='{!! $bitcoin->id!!}' class='btn btn-default editBtn' ><i class='fa fa-edit'></i>Details</a>
                            @endif
@@ -192,7 +193,7 @@
                         </td>
                         <td>
                           @if($bitcoins->sales_alert == "not sent")
-                          <a href="#confirm_bit_sell" id="confirm_payment"  role='button' data-edit-id='{!! $bitcoins->id!!}' class='btn btn-default editBtn' data-toggle="modal"><i class='fa fa-edit'></i>confirm sales</a>
+                          <a href="#confirm_bit_sell"   role='button' data-edit-id='{!! $bitcoins->id!!}' class='btn btn-default' data-toggle="modal"><i class='fa fa-edit'></i>confirm sales</a>
                           @else 
                            <a id="details2"  role='button' data-edit-id='{!! $bitcoins->id!!}' class='btn btn-default detailsBtn' ><i class='fa fa-edit'></i>Details</a>
                           @endif
