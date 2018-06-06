@@ -32,12 +32,14 @@ class UserController extends Controller
 
     public function pm_order() {
     	$user_id = Auth::user()->id;
+        $data['id'] = $user_id;
     	$data['title'] = 'PerfectMoney';
+        //$data['pmall'] = PurchasePerfectMoney::all();
     	$data['pm'] = PerfectMoney::where('user_id', $user_id)->get();
     	$data['modal_user'] =  PerfectMoney::where('user_id', $user_id)->get();
     	$data['pm_sold'] = PurchasePerfectMoney::where('user_id', $user_id)->get();
-      $data['sell_pm'] = PurchasePerfectMoney::where('id', $user_id)->get();
-
+      $data['sell_pm'] = PurchasePerfectMoney::where('user_id', $user_id)->get();
+    //dd($data);
     	return view('dashboard.pm_order', $data);
     }
 
@@ -58,8 +60,9 @@ class UserController extends Controller
     public function delete_order($id) {
 
     	$order = Bitcoin::find($id);
+        $order->status = "4";
 
-    	$order->delete();
+    	$order->save();
          return redirect()->back()->with(['message' =>'Successfully deleted!']);
     }
 
@@ -68,8 +71,9 @@ class UserController extends Controller
 
         $order = PurchaseBitCoin::find($id);
 
-        $order->delete();
-         return redirect()->back()->with(['message' =>'Successfully deleted!']);
+        $order->status = "4";
+        $order->save();
+         return redirect()->back()->with(['message' =>'Purchase Cancelled']);
     }
 
 
@@ -77,15 +81,17 @@ class UserController extends Controller
 
     	$order = PerfectMoney::find($id);
 
-    	$order->delete();
+    	$order->status = "4";
+        $order->save();
          return redirect()->back()->with(['message' =>'Successfully deleted!']);
     }
 
     public function pm_delete_sell($id) {
         //dd($id);
         $order = PurchasePerfectMoney::find($id);
+        $order->status = "4";
         //dd($order);
-        $order->delete();
+        $order->save();
          return redirect()->back()->with(['message' =>'Successfully deleted!']);
     }
 

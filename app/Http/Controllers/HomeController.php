@@ -140,7 +140,8 @@ class HomeController extends Controller
             'total' => $input['total'],
             'wallet_id' => $input['wallet_id'],
             'ref_no' => $ref_no,
-            'user_id' => $user_id
+            'user_id' => Auth::user()->id,
+            'status'=> "0"
         ]);
 
       
@@ -172,7 +173,8 @@ class HomeController extends Controller
             'price' => $input['price1'],
             'total' => $input['total'],
             'ref_no' => $ref_no,
-            'user_id' => $user_id
+            'user_id' => Auth::user()->id,
+            'status'=> "0"
 
         ]);
       
@@ -323,7 +325,7 @@ class HomeController extends Controller
      //dd($data);
       Mail::send('emails.sell_currency',$data, function($message)
         {
-         $message->to("uchennaanih16@gmail.com")
+         $message->to("anihuchenna16@gmail.com")
          ->bcc('info@betaexchangeng.com')
          ->from('info@betaexchangeng.com')
             ->subject('Sell E-currency to us!!');

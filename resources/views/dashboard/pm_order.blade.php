@@ -92,7 +92,12 @@
 
 		                        						<td>
 	                        							 @if($pm_order->payment_alert == "not sent")
+	                        							 	@if($pm_order->status == "4")
+	                        							 	<a  id="canel" role="button"   role='button' class='btn btn-danger' data-toggle="modal" data-edit-id="{!! $pm_order->id !!}">Canelled</a>
+
+	                        							 	@else
 	                        							 	<a  id="confirm_payment"  role='button' data-edit-id='{!! $pm_order->id!!}' class='btn btn-default' data-toggle="modal"><i class='fa fa-edit'></i>confirm payment</a>
+	                        							 	@endif
 	                        							 @else 
 															<a id="details"  role='button' data-edit-id='{!! $pm_order->id!!}' class='btn btn-default viewBtn' ><i class='fa fa-edit viewBtn'></i>Details</a>
 	                        							 @endif
@@ -162,7 +167,14 @@
 			                        				<td>{!! $pm->total !!}</td>
 			                        				 <td>
 			                        				 	 @if($pm->sales_alert == "not sent")
+			                        				 	 	@if($pm->status == "4")
+			                        				 	 	<a  id="canel" role="button"   role='button' class='btn btn-danger' data-toggle="modal" data-edit-id="{!! $pm->id !!}">Canelled</a>
+			                        				 	 	@else
+
 			                        				 	<a role="button" id="confirm_sold_payment"  role='button' class='btn btn-default' data-toggle="modal" data-edit-id="{!! $pm->id !!}"><i class='fa fa-edit'></i>confirm sales</a>
+			                        				 	@endif
+
+
 			                        				 	@else
 			                        				 	<a  role="button" id="details2"  role='button' data-edit-id='{!! $pm->id !!}' class='btn btn-default' ><i class='fa fa-edit viewBtn2'></i>Details</a>
 			                        				 	@endif
@@ -237,6 +249,13 @@
           	$('#delheader').hide();
           }
 
+          if ($('#canel').length) {
+          	$('#del_pm').hide();
+          	$('#delheader').hide();
+          	 $('#head_display').html("Details");
+          	 $('#del').hide();
+          }
+
               $('#ordered_pm').DataTable({
                             "paging": true,
                             "lengthChange": true,
@@ -268,6 +287,18 @@
                             ]
                         });
 
+		$("#confirm_payment").click(function () {
+
+            $("#view_modal_body").load("confirm_buypm/" + $(this).data("edit-id"),function(responseTxt, statusTxt, xh)
+                {
+                     $("#view_modal").modal({
+                                    backdrop: 'static',
+                                    keyboard: true
+                                }, "show");
+                               // bindForm(this);
+                });
+            return false;
+         });
 
                 // load buy pm details modal
                 $(".viewBtn").click(function () {

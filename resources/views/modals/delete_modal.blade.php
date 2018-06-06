@@ -1,5 +1,6 @@
-@foreach($sell_pm as $data)
+
 <div id="delete_pm_modal" class="modal fade" tabindex="-1" role="dialog" aria-labellby="myModalLabel" aria-hidden="true">
+  @foreach($sell_pm as $data)
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -18,12 +19,14 @@
              
     </div>
   </div>
+  @endforeach
 </div>
 
-@endforeach
 
-@foreach($modal_user as $data)
+
 <div id="delete_modal" class="modal fade" tabindex="-1" role="dialog" aria-labellby="myModalLabel" aria-hidden="true">
+  @foreach($modal_user as $data)
+
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -42,6 +45,6 @@
              
     </div>
   </div>
+  @endforeach
 </div>
 
-@endforeach

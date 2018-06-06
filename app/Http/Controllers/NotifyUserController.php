@@ -71,10 +71,16 @@ class NotifyUserController extends Controller
         return view('modals.pm_sell_modal', $data);
     }
 
+    //  public function confirm_sold($id) {
+    //     $data['sold_pm'] = PerfectMoney::find($id);
+    //     //dd($data);
+    //     return view('modals.pm_modal', $data);
+    // }
+
      public function Confirm_buypm($id) {
         $data['pm'] = PerfectMoney::find($id);
         //dd($data);
-        return view('modals.pm_modal', $data);
+        return view('modals.pm_modals', $data);
     }
 
     public function confirm_bit($id) {

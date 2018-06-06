@@ -54,7 +54,8 @@ class Utility
         {
             return array("1"=>"Registered",
                         "2"=>"Confirmed",
-                        "3"=>"Activated");
+                        "3"=>"Activated",
+                         "4"=>"Canceled");
         }
 
 

@@ -106,14 +106,20 @@
 
                          <td>
                            @if($bitcoin->status == "0")
-                              Processing...
-                            @else
-                              Completed
+                              <h5>Processing...</h5>
+                            @elseif($bitcoin->status == "1")
+                              <h5>Completed</h5>
+                            @elseif($bitcoin->status == "4")
+                              <h5 id="cancel">Cancelled</h5>
                            @endif
                          </td>
                          <td>
                            @if($bitcoin->payment_alert == "not sent")
+                              @if($bitcoin->status == "4")
+                              <a  id="cancel" role='button' data-edit-id='{!! $bitcoin->id!!}' class='btn btn-danger' >Cancelled</a>
+                              @else
                             <a id="confirm_payment"  role='button' data-edit-id='{!! $bitcoin->id!!}' class='btn btn-default' data-toggle="modal"><i class='fa fa-edit'></i>confirm payment</a>
+                            @endif
                            @else
                            <a id="details"  role='button' data-edit-id='{!! $bitcoin->id!!}' class='btn btn-default editBtn' ><i class='fa fa-edit'></i>Details</a>
                            @endif
@@ -193,7 +199,12 @@
                         </td>
                         <td>
                           @if($bitcoins->sales_alert == "not sent")
-                          <a id="confirm_bit_sell"   role='button' data-edit-id='{!! $bitcoins->id!!}' class='btn btn-default' data-toggle="modal"><i class='fa fa-edit'></i>confirm sales</a>
+                            @if($bitcoins->status == "4")
+                            <a id="cancel" role='button' data-edit-id='{!! $bitcoins->id!!}' class='btn btn-danger' ><i class='fa fa-edit'></i>Cancelled</a>
+                            @else
+                            <a id="confirm_bit_sell"   role='button' data-edit-id='{!! $bitcoins->id!!}' class='btn btn-default' data-toggle="modal"><i class='fa fa-edit'></i>confirm sales</a>
+                            @endif
+                          
                           @else 
                            <a id="details2"  role='button' data-edit-id='{!! $bitcoins->id!!}' class='btn btn-default detailsBtn' ><i class='fa fa-edit'></i>Details</a>
                           @endif
@@ -266,6 +277,14 @@
           if($('#details2').length) {
             $('#delete').hide();
             $('#delrow').hide();
+          }
+
+          if($('#cancel').length) {
+            $('#delete').hide();
+            $('#delrow').hide();
+            $('#del').hide();
+             $('#head_display').html("Details");
+             $('#deletebtn').hide();
           }
 
               $('#bitcoin').DataTable({
