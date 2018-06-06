@@ -1,7 +1,6 @@
 
-<div id="confirm" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-       <form method="post" action="{{route('confirm_pm')}}" role="form" enctype="multipart/form-data" id="confirm_buy_bitcoin">
+
+      <form method="post" action="{{route('confirm_bitcoin')}}" role="form" enctype="multipart/form-data" id="confirm_buy_bitcoin">
           {{csrf_field()}}
       <div class="modal-content">
         <div class="modal-header">
@@ -11,7 +10,7 @@
           
             
               <div class="form-group">
-                   <label>Date</label>
+                   <label>Date Sent</label>
                   <input type="date" class="form-control" placeholder="Payment Date(d-m-y)" name="date" id="date">
               </div>
 
@@ -32,7 +31,8 @@
                 <input type="text" class="form-control" name="depositor_name" id="depositor_name" placeholder="eg:john eze">
               </div>
 
-              <input type="hidden" name="purchase_id" value="{{$data->id}}">
+               <input type="hidden" name="purchase_id" value="{{$bit->id}}">
+
             
           
           <div class="form-group">
@@ -42,7 +42,7 @@
         </div>
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal" style="margin-top: 0">Close</button>
           <input type="submit" name="confirm_btn" value="OK" class="btn btn-primary">
         </div>
 
@@ -50,6 +50,3 @@
       </div>
     </form>
     
-    </div>
-</div>
-

@@ -149,6 +149,7 @@ class RegisterController extends Controller
               DB::beginTransaction();
 
            $user= User::create([
+            'id'=> $user_id,
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
             'middle_name' => $data['middle_name'],
@@ -252,13 +253,15 @@ class RegisterController extends Controller
 
 
          private function checkid($gen_id) {
-            $exists = User::where('id', $gen_id)->exists();
-            if($exists) {
-              $this->user_id();
-            } else {
-              return $gen_id;
-            }
-         }
+      $exists = User::where('id', $gen_id)->exists();
+      if($exists) {
+        $id = $this->user_id();
+        return $id;
+
+      } else {
+        return $gen_id;
+      }
+   }
 
 
    private function send_sms($user)

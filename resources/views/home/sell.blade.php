@@ -20,7 +20,15 @@
 
         <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
 
-
+           @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
 <form  role="form" method="POST" action="{{route('sell_currency')}}" id="sell_ecurrency" novalidate>
   {{csrf_field()}}
                        <!--  <input type="hidden" name="_token" value="GIRRCeWQtfBgT69MoprzfcTGrr3GsC26GvwxU9NM"> -->
@@ -48,7 +56,7 @@
             <div class="col-xs-12 col-sm-4 col-md-4">
                 <div class="form-group" >
                     <label for="unit">Units:</label>
-                    <input class="form-control input-lg numericText" required="true" placeholder="unit" tabindex="6" maxlength="11" id="unit" name="unit" type="text">
+                    <input class="form-control input-lg numericText" required="true" placeholder="unit" tabindex="6" maxlength="11" id="unit" name="unit" type="text" value="{{old('unit')}}">
                    
                     <span class="text-danger"></span>
                     <span id="phone"></span>
@@ -57,7 +65,7 @@
              <div class="col-xs-12 col-sm-4 col-md-4">
                 <div class="form-group" >
                     <label for="total">Total: =N=</label>
-                    <input class="form-control input-lg numericText" required="true" placeholder="Total" tabindex="6" maxlength="11" readonly="true" id="total" name="total" type="text">
+                    <input class="form-control input-lg numericText" required="true" placeholder="Total" tabindex="6" maxlength="11" readonly="true" id="total" name="total" type="text" value="{{old('total')}}">
                    
                     <span class="text-danger"></span>
                     <span id="phone"></span>
@@ -66,14 +74,14 @@
         </div>
                 <div class="form-group" style="margin-top: 20px;">
                 <label for="account_name">Bank Account Name:</label>
-        <input class="form-control input-lg" id="account_name" required="true" placeholder="Enter Account Name" tabindex="1" name="account_name" type="text">
+        <input class="form-control input-lg" id="account_name" required="true" placeholder="Enter Account Name" tabindex="1" name="account_name" type="text" value="{{old('account_name')}}">
                     <span class="text-danger"></span>
                   </div> 
                   <div class="row" style="margin-top: 20px;"> 
                   <div class="col-xs-12 col-sm-6 col-md-6">     
                  <div class="form-group">
                     <label for="middle_name">Bank Account No:</label>
-    <input class="form-control input-lg" id="account_no" placeholder="Enter Account No" required="true" tabindex="2" name="account_no" type="number">
+    <input class="form-control input-lg" id="account_no" placeholder="Enter Account No" required="true" tabindex="2" name="account_no" type="number" value="{{old('account_no')}}">
                     
                     <span class="text-danger"></span>
                 </div>
@@ -126,21 +134,21 @@
             <div class="form-group">
               <label class="control-label col-sm-4">First Name</label>
               <div class="col-sm-12">
-                <input type="text" name="first_name" class="form-control" placeholder="First Name" required>
+                <input type="text" name="first_name" class="form-control" placeholder="First Name" required value="{{old('first_name')}}">
               </div>
             </div>
 
             <div class="form-group">
               <label class="control-label col-sm-4">Middle Name</label>
               <div class="col-sm-12">
-                <input type="text" name="middle_name" class="form-control" placeholder="Middle Name" required>
+                <input type="text" name="middle_name" class="form-control" placeholder="Middle Name" required value="{{old('middle_name')}}">
              </div>
             </div>
 
             <div class="form-group">
               <label class="control-label col-sm-4">Last Name</label>
               <div class="col-sm-12">
-                <input type="text" name="last_name" class="form-control" placeholder="Last Name" required>
+                <input type="text" name="last_name" class="form-control" placeholder="Last Name" value="{{old('last_name')}}" required>
               </div>
             </div>
 

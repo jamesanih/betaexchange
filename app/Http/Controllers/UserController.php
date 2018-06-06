@@ -31,19 +31,18 @@ class UserController extends Controller
     }
 
     public function pm_order() {
-    	$user_id = Auth::user()->user_id;
+    	$user_id = Auth::user()->id;
     	$data['title'] = 'PerfectMoney';
     	$data['pm'] = PerfectMoney::where('user_id', $user_id)->get();
     	$data['modal_user'] =  PerfectMoney::where('user_id', $user_id)->get();
     	$data['pm_sold'] = PurchasePerfectMoney::where('user_id', $user_id)->get();
-        $data['sell_pm'] = PurchasePerfectMoney::where('id', $user_id)->get();
-    	//dd($data);
+      $data['sell_pm'] = PurchasePerfectMoney::where('id', $user_id)->get();
 
     	return view('dashboard.pm_order', $data);
     }
 
     public function bitcoin_order() {
-    $user_id = Auth::user()->user_id;
+    $user_id = Auth::user()->id;
     $data['title']='Bitcoins';
     $data['bitcoins']=BitCoin::where('user_id', $user_id)->get();
     $data['modal_user'] =  BitCoin::where('user_id', $user_id)->get();
@@ -92,9 +91,9 @@ class UserController extends Controller
 
 
     public function profile() {
-    	$user_id = Auth::user()->user_id;
+    	$user_id = Auth::user()->id;
         //dd($user_id);
-    	$data['user'] = User::where('user_id', $user_id)->get();
+    	$data['user'] = User::where('id', $user_id)->get();
     	$data['account_details'] = AccountDetail::where('user_id', $user_id)->get();
     	//dd($data);
     	return view('dashboard.profile', $data);
@@ -117,23 +116,17 @@ class UserController extends Controller
         //dd($data);
         $path = 'receipt_uploads';
 
-        $this->validate($request, [
-            'date' => 'required',
-            'details_no' => 'required',
-            'amount_paid' => 'required',
-            'depositor_name' => 'required',
-            'receipt_dir' => 'required|file|mimes:png,jpeg,pdf|max:2000'
-        ]);
+             
 
         if($request->hasFIle('receipt_dir')) {
             $image = $request->file('receipt_dir');
             $filename = $image->getClientOriginalName();
              $fileExtension = $image->getClientOriginalExtension();
-             $newfilename = Auth::user()->user_id . "_" . $fileExtension;
+             $newfilename = Auth::user()->id . "." . $filename;
 
 
              $save = Confirm_buy_bitcoins::create([
-                'user_id' => Auth::user()->user_id,
+                'user_id' => Auth::user()->id,
                 'date_sent'=> $request['date'],
                 'details_no'=> $request['details_no'],
                 'amount_paid'=>$request['amount_paid'],
@@ -164,8 +157,10 @@ class UserController extends Controller
 
 
     public function confirm_pm(Request $request) {
-
+        $data = $request->all();
         $path = 'pm_receipt_uploads';
+
+        //dd($data);
 
         $this->validate($request, [
             'date' => 'required',
@@ -179,11 +174,11 @@ class UserController extends Controller
             $image = $request->file('receipt_dir');
             $filename = $image->getClientOriginalName();
              $fileExtension = $image->getClientOriginalExtension();
-             $newfilename = Auth::user()->user_id . "_" . $fileExtension;
+             $newfilename = Auth::user()->id . "_" . $filename;
 
 
              $save = Confirm_buy_pm::create([
-                'user_id' => Auth::user()->user_id,
+                'user_id' => Auth::user()->id,
                 'date_sent'=> $request['date'],
                 'details_no'=> $request['details_no'],
                 'amount_paid'=>$request['amount_paid'],
@@ -257,7 +252,7 @@ class UserController extends Controller
 
     private function bitcoin_alert_status() {
 
-        $id = Auth::user()->user_id;
+        $id = Auth::user()->id;
         // $status = BitCoin::find($id);
         // $status->payment_alert = "Alert sent";
         $status = DB::table("bitcoins")->where('user_id', $id)
@@ -272,7 +267,7 @@ class UserController extends Controller
 
      private function pm_alert_status() {
 
-        $id = Auth::user()->user_id;
+        $id = Auth::user()->id;
         // $status = BitCoin::find($id);
         // $status->payment_alert = "Alert sent";
         $status = DB::table("perfect_money")->where('user_id', $id)
@@ -293,7 +288,7 @@ class UserController extends Controller
         ]);
 
          $sell = Confirm_sell_bitcoin::create([
-                'user_id'=> Auth::user()->user_id,
+                'user_id'=> Auth::user()->id,
                 'date_sent'=> $request['date_sent'],
                 'hash'=> $request['hash'],
                 'amount_sent'=> $request['amount_sent'],
@@ -323,14 +318,14 @@ class UserController extends Controller
             'amount_sent' => 'required',
             'wallet_id' => 'required'
         ]);
-
+        //dd($request->all());
          $sell = Confirm_sell_pm::create([
-                'user_id'=> Auth::user()->user_id,
+                'user_id'=> Auth::user()->id,
                 'date_sent'=> $request['date_sent'],
                 'batch_number'=> $request['batch_number'],
                 'amount_sent'=> $request['amount_sent'],
                 'wallet_id' => $request['wallet_id'],
-                'purchase_perfect_id' => $request['purchase_id']
+                'purchase_perfect_money_id' => $request['purchase_id']
          ]);
 
          if($sell) {
@@ -340,15 +335,18 @@ class UserController extends Controller
            // $this->update_pmsell_alert();
             $title = "Fund PerfectMoney Alert";
             $this->notice($title, $sender_name,$subject,$desc);
+             $this->update_pmsell_alert();
             $this->send_email($title, $request['date_sent'], $request['batch_number'], $request['amount_sent'], $request['wallet_id']);
          }
+
+         return redirect()->back()->with(['message'=>'we will get back to you']);
 
 
     }
 
 
     private function update_bitsell_alert() {
-        $id = Auth::user()->user_id;
+        $id = Auth::user()->id;
         // $status = BitCoin::find($id);
         // $status->payment_alert = "Alert sent";
         $status = DB::table("purchase_bitcoins")->where('user_id', $id)
@@ -359,12 +357,12 @@ class UserController extends Controller
     }
 
     private function update_pmsell_alert() {
-        $id = Auth::user()->user_id;
+        $id = Auth::user()->id;
         // $status = BitCoin::find($id);
         // $status->payment_alert = "Alert sent";
-        $status = DB::table("purchase_bitcoins")->where('user_id', $id)
+        $status = DB::table("purchase_perfect_money")->where('user_id', $id)
                         ->update([
-                            'payment_alert'=> "Alert sent"
+                            'sales_alert'=> "Alert sent"
                         ]);
        
     }

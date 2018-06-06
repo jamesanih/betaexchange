@@ -11,6 +11,15 @@
                 <div class="about-top">
                     <h1 class="text-center"></h1>
                 </div>
+                @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
                 <div class="about-bottom" style="margin-top: 30px;" data-ng-controller="niceController" novalidate>
                     <div class="panel panel-default">
                         
@@ -42,7 +51,7 @@
                                   <div class="form-group">
                                     <label class="control-label col-sm-2">Units (&#x24;)</label>
                                     <div class="col-sm-6">
-                                       <input type="text" class="form-control" placeholder="Enter the no of units" name="units" id="units" data-maxlength="8" maxlength="8" data-ng-model="units"> 
+                                       <input type="text" class="form-control" placeholder="Enter the no of units" name="units" id="units" data-maxlength="8" maxlength="8" data-ng-model="units" value="{{old('units')}}"> 
                                     </div>
                                    
                                   </div>
@@ -50,7 +59,7 @@
                                   <div class="form-group">
                                     <label class="control-label col-sm-2">Total (&#8358;)</label>
                                     <div class="col-sm-6">
-                                      <input type="text" class="form-control" readonly="true" placeholder="Total" data-required="true" name="total_units" id="total_units">
+                                      <input type="text" class="form-control" readonly="true" placeholder="Total" data-required="true" name="total_units" id="total_units" value="{{old('total_units')}}">
 
                                     </div>
                                   </div>
@@ -69,7 +78,7 @@
                                       <div class="form-group">
                                         <label class="control-label col-sm-2" id="payment_type"></label>
                                         <div class="col-sm-6">
-                                          <input type="text" name="wallet" id="wallet" class="form-control" data-ng-model="wallet" maxlength="35" data-max-maxLength="35"required> 
+                                          <input type="text" name="wallet" id="wallet" class="form-control" data-ng-model="wallet" maxlength="35" data-max-maxLength="35"required value="{{old('wallet')}}"> 
                                         </div>
                                         <i class="fas fa-check" id="ok"></i>
                                           <span class="text-danger" id="msg_error"></span>
@@ -78,7 +87,7 @@
                                       <div class="form-group">
                                         <label class="control-label col-sm-2" id="confirm_payment_type"></label>
                                         <div class="col-sm-6">
-                                          <input type="text" name="confirm_wallet" class="form-control" id="confirm_wallet" data-equalto="#wallet" maxlength="35"  data-max-maxLength="35" required data-ng-model="pm">
+                                          <input type="text" name="confirm_wallet" class="form-control" id="confirm_wallet" data-equalto="#wallet" maxlength="35"  data-max-maxLength="35" required data-ng-model="pm" value="{{old('confirm_wallet')}}">
                                         </div>
                                          <i class="fas fa-check" id="wallet_ok"></i>
                                           <span class="text-danger" id="wallet_msg" ></span>
@@ -111,14 +120,14 @@
                                         <div class="form-group">
                                           <label class="control-label col-sm-2">First Name</label>
                                           <div class="col-sm-6">
-                                            <input type="text" name="first_name" id="first_name" class="form-control" placeholder="eg:Mark"  required>
+                                            <input type="text" name="first_name" id="first_name" class="form-control" placeholder="eg:Mark"  required value="{{old('first_name')}}">
                                           </div>
                                         </div>
 
                                         <div class="form-group">                                          
                                           <label class="control-label col-sm-2">Middle Name</label>
                                           <div class="col-sm-6">
-                                             <input type="text" name="middle_name" class="form-control" id="mname" placeholder="eg:Mark" required>
+                                             <input type="text" name="middle_name" class="form-control" id="mname" placeholder="eg:Mark" required value="{{old('middle_name')}}">
                                           </div>
                                          
                                         </div>
@@ -126,14 +135,14 @@
                                         <div class="form-group">
                                           <label class="control-label col-sm-2">Last Name</label>
                                           <div class="col-sm-6">
-                                            <input type="text" name="last_name" class="form-control" id="last_name" placeholder="eg:Mark" required>
+                                            <input type="text" name="last_name" class="form-control" id="last_name" placeholder="eg:Mark" required value="{{old('last_name')}}">
                                           </div>
                                         </div>
 
                                         <div class="form-group">
                                           <label class="control-label col-sm-2">Phone Number</label>
                                           <div class="col-sm-6">
-                                            <input type="number" name="phone_no" id="phone_no" placeholder="eg:00000" class="form-control" maxlength="11">
+                                            <input type="number" name="phone_no" id="phone_no" placeholder="eg:00000" class="form-control" maxlength="11" value="{{old('phone_no')}}">
                                           </div>
                                           <span class="text-danger" id="number_msg" ></span>
                                         </div>
@@ -147,7 +156,7 @@
                                   <div class="form-group">
                                     <label class="control-label col-sm-2">Email</label>
                                     <div class="col-sm-6">
-                                      <input type="email" name="email" id="email" id="email" placeholder="eg:name@gmail.com" class="form-control" required>
+                                      <input type="email" name="email" id="email" id="email" placeholder="eg:name@gmail.com" class="form-control" required >
                                     </div>
                                   </div>
 
@@ -185,7 +194,7 @@
                                    <div class="form-group">
                                      <label class="control-label col-sm-2">Account First Name</label>
                                      <div class="col-sm-6">
-                                       <input type="text" name="first_name2" id="first_name2" class="form-control" placeholder="eg:john">
+                                       <input type="text" name="first_name2" id="first_name2" class="form-control" placeholder="eg:john" value="{{old('first_name2')}}">
                                      </div>
                                       <i class="fas fa-check" id="ok_msg"></i>
                                        <span class="text-danger" id="ferror_msg"></span>
@@ -194,7 +203,7 @@
                                    <div class="form-group">
                                      <label class="control-label col-sm-2">Account Middle Name</label>
                                      <div class="col-sm-6">
-                                       <input type="text" name="m_name2" id="m_name2" class="form-control" placeholder="eg:mark">
+                                       <input type="text" name="m_name2" id="m_name2" class="form-control" placeholder="eg:mark" value="{{old('m_name2')}}">
                                      </div>
                                      <i class="fas fa-check" id="ok_msg2"></i>
                                      <span class="text-danger" id="ferror_msg2"></span>
@@ -204,7 +213,7 @@
                                    <div class="form-group">
                                      <label class="control-label col-sm-2">Account Last Name</label>
                                      <div class="col-sm-6">
-                                       <input type="text" name="last_name2" id="last_name2" class="form-control" placeholder="eg:Eze">
+                                       <input type="text" name="last_name2" id="last_name2" class="form-control" placeholder="eg:Eze" value="{{old('last_name2')}}">
                                      </div>
                                      <i class="fas fa-check" id="ok_msg3"></i>
                                      <span class="text-danger" id="ferror_msg3"></span>
@@ -214,7 +223,7 @@
                                    <div class="form-group">
                                      <label class="control-label col-sm-2">Account Number</label>
                                      <div class="col-sm-6">
-                                       <input type="number" name="ac_number" id="ac_number" class="form-control" placeholder="eg:00000" maxlength="10">
+                                       <input type="number" name="ac_number" id="ac_number" class="form-control" placeholder="eg:00000" maxlength="10" value="{{old('ac_number')}}">
                                      </div>
                                      <span class="text-danger" id="ac_msg" ></span>
                                    </div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\notifyUser;
 use App\Models\BitCoin;
+use App\Models\PerfectMoney;
 use App\Models\PurchaseBitCoin;
 use App\Models\PurchasePerfectMoney;
 use App\Confirm_sell_bitcoin;
@@ -53,5 +54,47 @@ class NotifyUserController extends Controller
         $data['conf_details'] = Confirm_sell_bitcoin::where('purchase_bitcoins_id', $id)->get();
         //dd($data);
         return view('modals.bt_confirm_sells_modal', $data);
+    }
+
+    public function viewPm($id) {
+        $data['page_title'] = "Perfect Money";
+        $data['buy_pm'] = PerfectMoney::find($id);
+        $data['conf_details'] = Confirm_buy_pm::where('perfect_money_id', $id)->get();
+        //dd($data);
+
+        return view('modals.pm_confirm_modal', $data);
+    }
+
+    public function confirm_sold($id) {
+        $data['sold_pm'] = PurchasePerfectMoney::find($id);
+        //dd($data);
+        return view('modals.pm_sell_modal', $data);
+    }
+
+     public function Confirm_buypm($id) {
+        $data['pm'] = PerfectMoney::find($id);
+        //dd($data);
+        return view('modals.pm_modal', $data);
+    }
+
+    public function confirm_bit($id) {
+        $data['bit'] = BitCoin::find($id);
+        //dd($data);
+        return view('modals.bit_modal', $data);
+    }
+
+     public function load_confirmbitsell($id) {
+        $data['bitsell'] = PurchaseBitCoin::find($id);
+        //dd($data);
+        return view('modals.bitsell_modal', $data);
+    }
+
+    public function pm_details($id) {
+        $data['page_title'] = "Perfect Money";
+        $data['sold_pm'] = PurchasePerfectMoney::find($id);
+        $data['conf_details'] = Confirm_sell_pm::where('purchase_perfect_money_id', $id)->get();
+        //dd($data);
+
+        return view('modals.pmsell', $data);
     }
 }

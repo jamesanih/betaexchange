@@ -36,10 +36,17 @@ public function  buy_currency(Request $request) {
     	$code = $this->generate_code();
        $id = $this->user_id();
       $user_id = $this->checkid($id);
-
+      $this->validate($request, [
+            'email' => 'required|unique:users',
+            'first_name' => 'required',
+            'last_name'=> 'required',
+            'password' => 'required',
+            'phone_no'=> 'required|unique:users'
+        ]);
       //dd($user_id);
 
     	$user = User::create([
+        'id'=> $user_id,
     		'first_name'=> $request['first_name'],
     		'middle_name' => $request['middle_name'],
     		'last_name'=> $request['last_name'],
@@ -54,7 +61,8 @@ public function  buy_currency(Request $request) {
 
     	if ($user) {
     		
-    		$user_id = Auth::user()->user_id;
+    		$user_id = Auth::user()->id;
+
     		$account_details = AccountDetail::create([
     			'user_id' => $user_id,
     			'account_first_name'=>$request['first_name2'],
@@ -72,12 +80,13 @@ public function  buy_currency(Request $request) {
           $desc ="Thank you for ordering BitCoin with BetaExchangeNg.com. Please kindly visit Your mail for more information";
           $title = "E-currency";
            $buy_bitcoin = BitCoin::create([
-            'user_id' =>Auth::user()->user_id,
+            'user_id' =>Auth::user()->id,
             'unit' => $request['units'],
             'total' => $request['total_units'],
             'wallet_id' => $request['wallet'],
             'method' => $request['payment_method'],
-            'ref_no' => $ref_no
+            'ref_no' => $ref_no,
+            'status' => "0"
         ]);
         $register_user = \Auth::user();
         $input = $request->all();
@@ -97,7 +106,7 @@ public function  buy_currency(Request $request) {
           $title = "E-currency";
 
           $buy_perfectmoney = PerfectMoney::create([
-            'user_id' =>Auth::user()->user_id,
+            'user_id' =>Auth::user()->id,
             'unit' => $request['units'],
             'total' => $request['total_units'],
             'method' => $request['payment_method'],
@@ -157,7 +166,9 @@ public function  buy_currency(Request $request) {
    private function checkid($gen_id) {
       $exists = User::where('id', $gen_id)->exists();
       if($exists) {
-        $this->user_id();
+        $id = $this->user_id();
+        return $id;
+
       } else {
         return $gen_id;
       }

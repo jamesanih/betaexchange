@@ -113,7 +113,7 @@
                          </td>
                          <td>
                            @if($bitcoin->payment_alert == "not sent")
-                            <a href="#confirm" id="confirm_payment"  role='button' data-edit-id='{!! $bitcoin->id!!}' class='btn btn-default' data-toggle="modal"><i class='fa fa-edit'></i>confirm payment</a>
+                            <a id="confirm_payment"  role='button' data-edit-id='{!! $bitcoin->id!!}' class='btn btn-default' data-toggle="modal"><i class='fa fa-edit'></i>confirm payment</a>
                            @else
                            <a id="details"  role='button' data-edit-id='{!! $bitcoin->id!!}' class='btn btn-default editBtn' ><i class='fa fa-edit'></i>Details</a>
                            @endif
@@ -193,7 +193,7 @@
                         </td>
                         <td>
                           @if($bitcoins->sales_alert == "not sent")
-                          <a href="#confirm_bit_sell"   role='button' data-edit-id='{!! $bitcoins->id!!}' class='btn btn-default' data-toggle="modal"><i class='fa fa-edit'></i>confirm sales</a>
+                          <a id="confirm_bit_sell"   role='button' data-edit-id='{!! $bitcoins->id!!}' class='btn btn-default' data-toggle="modal"><i class='fa fa-edit'></i>confirm sales</a>
                           @else 
                            <a id="details2"  role='button' data-edit-id='{!! $bitcoins->id!!}' class='btn btn-default detailsBtn' ><i class='fa fa-edit'></i>Details</a>
                           @endif
@@ -232,6 +232,7 @@
      
     </div>
 </div>
+
 
 <!-- sell bitcoins details modal -->
 <div class="modal fade" id="view_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -298,6 +299,20 @@
                             ]
                         });
 
+
+                 $("#confirm_bit_sell").click(function () {
+
+            $("#view_modal_body").load("load_confirmbitsell/" + $(this).data("edit-id"),function(responseTxt, statusTxt, xh)
+                {
+                     $("#view_modal").modal({
+                                    backdrop: 'static',
+                                    keyboard: true
+                                }, "show");
+                               // bindForm(this);
+                });
+            return false;
+         });
+
                 //load sell details page
                 $(".detailsBtn").click(function () {
 
@@ -313,6 +328,7 @@
          });
 
 
+
                 //load buy bitcoin details page
                 $(".editBtn").click(function () {
 
@@ -326,6 +342,23 @@
                 });
             return false;
          });
+
+                //buy
+                $("#confirm_payment").click(function () {
+
+            $("#view_modal_body2").load("confirm_bit/" + $(this).data("edit-id"),function(responseTxt, statusTxt, xh)
+                {
+                     $("#view_modal2").modal({
+                                    backdrop: 'static',
+                                    keyboard: true
+                                }, "show");
+                                //bindForm(this);
+                });
+            return false;
+         });
+
+
+
 
 
 

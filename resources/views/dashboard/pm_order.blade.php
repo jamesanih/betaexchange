@@ -71,22 +71,39 @@
 			                        					<td>{!! $pm_order->account_no !!}</td>
 			                        					<td>{!! $pm_order->unit !!}</td>
 			                        					<td>{!! $pm_order->total !!}</td>
-		                        						@if($pm_order->method == 1)
-		                        							<td>Internet Bank Transfer</td>
-		                        						@elseif($pm_order->method == 2)
-		                        							<td>Bank Deposit</td>
-		                        						@elseif($pm_order->method == 3)
-		                        							<td>Short Code</td>
-		                        						@endif
 
-		                        						@if($pm_order->status == 0)
-		                        							<td>Processing</td>
-		                        							<td><a href="#confirm" id="confirm_payment"  role='button' data-edit-id='{!! $pm_order->id!!}' class='btn btn-default editBtn' data-toggle="modal"><i class='fa fa-edit'></i>confirm payment</a></td>
-									                        <td><a href='#delete_modal' data-delete-id='{!! $pm_order->id!!}' class='btn btn-danger deleteBtn' role='button' data-toggle='modal'><i class='fa fa-trash-o fa-lg'></i></a></td>
+			                        					<td>
+			                        					@if($pm_order->method == 1)
+				                        					Internet Bank Transfer
+														@elseif($pm_order->method == 2)
+															Bank Deposit
+														@elseif($pm_order->method == 3)
+															Short Code
+														@endif
+			                        					</td>                       						
+		                        						
+		                        						<td>
+	                        							@if($pm_order->status == 0)
+		                        							Processing
 		                        						@else
-		                        							<td>Completed</td>
-		                        							 <td><a id="#details"  role='button' data-edit-id='{!! $pm_order->id!!}' class='btn btn-default editBtn' ><i class='fa fa-edit'></i>Details</a></td>
+		                        							Completed
 		                        						@endif
+		                        						</td>
+
+		                        						<td>
+	                        							 @if($pm_order->payment_alert == "not sent")
+	                        							 	<a  id="confirm_payment"  role='button' data-edit-id='{!! $pm_order->id!!}' class='btn btn-default' data-toggle="modal"><i class='fa fa-edit'></i>confirm payment</a>
+	                        							 @else 
+															<a id="details"  role='button' data-edit-id='{!! $pm_order->id!!}' class='btn btn-default viewBtn' ><i class='fa fa-edit viewBtn'></i>Details</a>
+	                        							 @endif
+		                        						</td>
+									                    <td id="del">
+									                       <a href='#delete_modal' data-delete-id='{!! $pm_order->id!!}' class='btn btn-danger deleteBtn' role='button' data-toggle='modal'><i class='fa fa-trash-o fa-lg'></i></a>
+									                      </td>
+		                        						
+		                        							
+		                        							
+		                        						
 			                        					
 			                        				</tr>
 
@@ -125,7 +142,7 @@
 			                        			<th>Units</th>
 			                        			<th>Total</th>
 			                        			<th width="5%">confirm sale</th>
-                                         		<th width="5%"></th>
+                                         		<th width="5%" id="delheader"></th>
 			                        			
 			                        		</tr>
 			                        	</thead>
@@ -133,7 +150,7 @@
 			                        		@if(count($pm_sold))
 			                        			@foreach($pm_sold as $pm)
 			                        			<tr>
-			                        				<td>{!! $pm->created_at !!}</td>
+			                        				<td>{!! $pm->created_at->todatestring() !!}</td>
 			                        				<td>{!!$pm->ref_no !!}</td>
 			                        				<td>{!! $pm->account_name !!}</td>
 			                        				<td>{!! $pm->account_no !!}</td>
@@ -143,8 +160,14 @@
 			                        				<td>{!! $pm->price !!}</td>
 			                        				<td>{!! $pm->unit !!}</td>
 			                        				<td>{!! $pm->total !!}</td>
-			                        				 <td><a href="#confirm_pm_sell" id="confirm_payment"  role='button' class='btn btn-default editBtn' data-toggle="modal"><i class='fa fa-edit'></i>confirm sales</a></td>
-							                        <td><a href='#delete_pm_modal' class='btn btn-danger deleteBtn' role='button' data-toggle='modal'><i class='fa fa-trash-o fa-lg'></i></a></td>
+			                        				 <td>
+			                        				 	 @if($pm->sales_alert == "not sent")
+			                        				 	<a role="button" id="confirm_sold_payment"  role='button' class='btn btn-default' data-toggle="modal" data-edit-id="{!! $pm->id !!}"><i class='fa fa-edit'></i>confirm sales</a>
+			                        				 	@else
+			                        				 	<a  role="button" id="details2"  role='button' data-edit-id='{!! $pm->id !!}' class='btn btn-default' ><i class='fa fa-edit viewBtn2'></i>Details</a>
+			                        				 	@endif
+			                        				 </td>
+							                        <td id="del_pm"><a href='#delete_pm_modal' class='btn btn-danger deleteBtn' role='button' data-toggle='modal'><i class='fa fa-trash-o fa-lg'></i></a></td>
 			                        			</tr>
 			                        			@endforeach
 			                        		@endif
@@ -167,9 +190,29 @@
             <!-- row -->
 	</div>
 
+<!-- confirm_sold_payment -->
+<div class="modal fade" id="conf_sold_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog"  id="sold_modal_body">
+     
+    </div>
+</div>
+<!-- view buy_pm details -->
+<div class="modal fade" id="view_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog"  id="view_modal_body">
+     
+    </div>
+</div>
 
-	 @include('modals.pm_modals')
-	  @include('modals.pm_sell_modal')
+<!-- view conf_sold details -->
+<div class="modal fade" id="buy_pm_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog"  id="pm_body">
+     
+    </div>
+</div>
+
+@include('modals.delete_modal')
+
+	
 </div>
 
 
@@ -181,11 +224,17 @@
           if($('#details').length) {
             $('#head_display').html("Details");
             $('#deletebtn').hide();
+            $('#del').hide();
           }
 
 
            if($('#confirm_payment').length) {
             $('#head_display').html("Confirm Payment");
+          }
+
+          if ($('#details2').length) {
+          	$('#del_pm').hide();
+          	$('#delheader').hide();
           }
 
               $('#ordered_pm').DataTable({
@@ -218,6 +267,50 @@
                                 'copy', 'csv', 'excel', 'pdf', 'print'
                             ]
                         });
+
+
+                // load buy pm details modal
+                $(".viewBtn").click(function () {
+
+            $("#view_modal_body").load("viewPm/" + $(this).data("edit-id"),function(responseTxt, statusTxt, xh)
+                {
+                     $("#view_modal").modal({
+                                    backdrop: 'static',
+                                    keyboard: true
+                                }, "show");
+                               // bindForm(this);
+                });
+            return false;
+         });
+
+
+                $("#confirm_sold_payment").click(function () {
+
+            $("#sold_modal_body").load("confirm_sold/" + $(this).data("edit-id"),function(responseTxt, statusTxt, xh)
+                {
+                     $("#conf_sold_modal").modal({
+                                    backdrop: 'static',
+                                    keyboard: true
+                                }, "show");
+                               // bindForm(this);
+                });
+            return false;
+         });
+
+
+                $("#details2").click(function () {
+
+            $("#pm_body").load("pm_details/" + $(this).data("edit-id"),function(responseTxt, statusTxt, xh)
+                {
+                     $("#buy_pm_modal").modal({
+                                    backdrop: 'static',
+                                    keyboard: true
+                                }, "show");
+                               // bindForm(this);
+                });
+            return false;
+         });
+
 
 
 

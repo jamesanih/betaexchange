@@ -1,4 +1,4 @@
- <form method="post" action="{{route('confirm_sell_pm')}}" role="form" id="confirm_sell_bitcoin">
+ <form method="post" action="{{route('confirm_sell')}}" role="form" id="confirm_sell_bitcoin">
           {{csrf_field()}}
       <div class="modal-content">
         <div class="modal-header">
@@ -12,11 +12,11 @@
                   <input type="date" class="form-control" placeholder="Payment Date(d-m-y)" name="date_sent" id="date_sent">
               </div>
 
-              <input type="text" name="purchase_id" value="{!! $sold_pm->id !!}">
+
 
               <div class="form-group">
-                   <label>Batch Number</label>
-                  <input type="text" class="form-control" name="batch_number" id="batch_number" placeholder="">
+                   <label>Hash</label>
+                  <input type="text" class="form-control" name="hash" id="hash" placeholder="">
               </div>
 
               <div class="form-group">
@@ -28,8 +28,8 @@
                   <label>Wallet ID</label>
                 <input type="text" class="form-control" name="wallet_id" id="wallet_id" placeholder="Enter your Wallet ID">
               </div>
-              
-             <!--  -->
+
+              <input type="hidden" name="purchase_id" value="{{$bitsell->id}}">
             
           
           
@@ -44,6 +44,3 @@
       </div>
     </form>
     
-
-
-

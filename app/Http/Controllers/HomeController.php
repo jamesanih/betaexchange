@@ -99,14 +99,20 @@ class HomeController extends Controller
             $id = $this->user_id();
             $user_id = $this->checkid($id);
             $ref_no = $this->getref_code();
+            //$verifycode = $this->generate_code();
             //dd($data);
 
         try {
             
         
        $input=$request->all();
+        $this->validate($request, [
+            'email' => 'required|unique:users',
+            'phone_no'=>'required|unique:users'
+        ]);
 
         $saveUser = User::create([
+            'id'=> $user_id,
             'first_name' => $input['first_name'],
             'middle_name' => $input['middle_name'],
             'last_name' => $input['last_name'],
@@ -148,6 +154,7 @@ class HomeController extends Controller
         'price' =>$input['price1'] ,
         'total' =>$input['total']);
 
+         $this->send_verifycode($code);
          $this->notify_currency_sales($user,"Bitcoin");
          
 
@@ -166,6 +173,7 @@ class HomeController extends Controller
             'total' => $input['total'],
             'ref_no' => $ref_no,
             'user_id' => $user_id
+
         ]);
       
           $user=array('account_name' =>$input['account_name'] ,       
@@ -176,6 +184,8 @@ class HomeController extends Controller
         'unit' =>$input['unit'] ,
         'price' =>$input['price1'] ,
         'total' =>$input['total']);
+
+          $this->send_verifycode($code);
          $this->notify_currency_sales($user,"Perfect Money");
 
        }
@@ -284,11 +294,11 @@ class HomeController extends Controller
       if($exists) {
         $id = $this->user_id();
         return $id;
+
       } else {
         return $gen_id;
       }
    }
-
 
 
     public function account_activation()
@@ -310,7 +320,7 @@ class HomeController extends Controller
      
      $data['user']=$user;
      $data['ctype']=$ctype;
-     dd($data);
+     //dd($data);
       Mail::send('emails.sell_currency',$data, function($message)
         {
          $message->to("uchennaanih16@gmail.com")
@@ -328,5 +338,25 @@ class HomeController extends Controller
             }
 
      }
+
+
+
+      private function send_verifycode($verifycode) {
+
+      $data['user'] = Auth::user()->first_name;
+      $data['verifycode'] = $verifycode;
+      //dd($data);
+
+        Mail::send('emails.verify_user', $data, function ($message){
+            $message->to('uchennaanih16@gmail.com')
+              ->bcc('info@betaexchangeng.com')
+                 ->from('info@betaexchangeng.com')
+                 ->subject('Verification code');
+        });
+     }
+
+
+     
+
 
 }

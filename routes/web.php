@@ -90,6 +90,11 @@ Route::group(['middleware'=>'auth'], function() {
 	Route::get('viewmsg/{id}', 'NotifyUserController@Viewmsg')->name('viewmsg');
 	Route::get('viewbitcoin/{id}', 'NotifyUserController@viewBitcoin')->name('viewbitcoin');
 	Route::get('viewsellBitcoin/{id}', 'NotifyUserController@viewsellBitcoin')->name('viewsellbitcoin');
+	Route::get('viewPm/{id}', 'NotifyUserController@viewPm');
+	Route::get('confirm_sold/{id}', 'NotifyUserController@confirm_sold');
+	Route::get('pm_details/{id}', 'NotifyUserController@pm_details');
+	Route::get('confirm_bit/{id}', 'NotifyUserController@confirm_bit');
+	Route::get('load_confirmbitsell/{id}', 'NotifyUserController@load_confirmbitsell');
 
 
 
