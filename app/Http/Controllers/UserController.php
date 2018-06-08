@@ -99,9 +99,13 @@ class UserController extends Controller
     public function profile() {
     	$user_id = Auth::user()->id;
         //dd($user_id);
-    	$data['user'] = User::where('id', $user_id)->get();
+        $data['user'] = User::where('id', $user_id)->get();
+        $ac = AccountDetail::where('user_id', $user_id)->get();
+        // dd($ac);
+        $data['account_no'] = substr($ac[0]->account_no, 6);
+        //dd(substr($ac[0]->account_no, 6));
     	$data['account_details'] = AccountDetail::where('user_id', $user_id)->get();
-    	//dd($data);
+    	
     	return view('dashboard.profile', $data);
     }
 

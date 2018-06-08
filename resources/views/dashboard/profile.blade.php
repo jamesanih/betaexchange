@@ -1,6 +1,9 @@
 @extends('layouts.user_master')
+{{--    --}}
 
 @section('content')
+
+</script>
 
 <div class="container">
 <!--header end here-->
@@ -37,7 +40,7 @@
                         </div>
                         	@endforeach
                         @endif
-
+ 
 
                         <div class="panel-heading ">
                             <strong style="font-size: 20px;">Bank Details</strong>
@@ -48,7 +51,7 @@
                         <div class="panel-body">
                           <div style="margin-bottom: 13px; margin-left:20px"><strong style="font-size: 20px;">Bank name</strong><br><p style="font-size: 17px;">{!! $details->bank_name !!}</p></div>
                           <div style="margin-bottom: 13px; margin-left:20px"><strong style="font-size: 20px;">Account name</strong><br><p style="font-size: 17px;">{!! $details->account_first_name !!} {!! $details->account_last_name !!}</p></div>
-                          <div style="margin-bottom: 13px; margin-left:20px"><strong style="font-size: 20px;">Account Number</strong><br><p style="font-size: 17px;">{!! $details->account_no !!}</p></div>
+                          <div style="margin-bottom: 13px; margin-left:20px"><strong style="font-size: 20px;">Account Number</strong><br><p style="font-size: 17px;" id="account_no">******{!! $account_no !!}</p></div>
 
 
                         </div>
@@ -87,6 +90,5 @@
 </div>
 @endsection
 @section('script')
-
 
 @stop

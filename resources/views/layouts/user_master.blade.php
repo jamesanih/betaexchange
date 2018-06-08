@@ -43,6 +43,9 @@
    <link href="{{ URL::to('favicon.png')}}" rel="icon" type="image/png">
    <script src="{{ asset('source/jquery-3.2.1.min.js') }}"></script>
   <script src="{{ asset('source/jquery.dataTables.min.js') }}"></script>
+  @section('script')
+           
+    @show
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -122,7 +125,7 @@ s0.parentNode.insertBefore(s1,s0);
         </div>
     </header>
 
-  
+    
 
 @yield('content')
 
